@@ -58,7 +58,7 @@ app.post("/11_module_b/api/auth/login", async (req, res) => {
 })
 
 // Get logged in users profile
-app.get("/11_module_b/api/auth/profile", authMiddleware, async (req, res) => {
+app.get("/11_module_b/api/auth/profile", async (req, res) => {
     const user_id = req.user_id;
     const user = await User.findById(req.user_id);
     if (user) {
