@@ -3,6 +3,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGODB_URI);
+await mongoose.connect(process.env.MONGODB_URI);
 
 export {mongoose as mg};
