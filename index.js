@@ -38,7 +38,6 @@ app.post("/11_module_b/api/auth/login", async (req, res) => {
         }, '_id')
         console.log(checkUser);
         if (checkUser.length != 0) {
-            const token = createToken(checkUser._id);
             return res.json({
                 success: true,
                 access_token: "",
