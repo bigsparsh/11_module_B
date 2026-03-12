@@ -35,7 +35,8 @@ app.post("/11_module_b/api/auth/login", async (req, res) => {
         const checkUser = await User.find({
             email: verify.data.email,
             password: verify.data.password
-        }, ['_id'])
+        }, '_id')
+        console.log(checkUser);
         if (checkUser.length != 0) {
             const token = createToken(checkUser._id);
             return res.json({
@@ -60,7 +61,7 @@ app.post("/11_module_b/api/auth/login", async (req, res) => {
 // Get logged in users profile
 app.get("/11_module_b/api/auth/profile", async (req, res) => {
     const user_id = req.user_id;
-    const user = await User.findById(req.user_id);
+    const user = await User.findById(req.user_id, '_id');
     if (user) {
         return res.json({
             success: true, 
@@ -87,9 +88,9 @@ app.get("/11_module_b/api/users",  async (req, res) => {
     const user = await User.find({
         _id: user_id,
         role: "ADMIN"
-    })
+    },'_id')
     if (user.length != 0) {
-        const allUsers = await User.find({});
+        const allUsers = await User.find({}, '_id');
         res.json({
             success: true,
             data: allUsers
@@ -108,7 +109,7 @@ app.get("/11_module_b/api/users/:id", async (req, res) => {
     const user_id = req.user_id;
     const user = await User.find({
         id: searchUserId
-    })
+    }, '_id')
     if (user.length != 0) {
         res.json({
             success: true,
@@ -127,7 +128,7 @@ app.post("/11_module_b/api/categories", async (req, res) => {
     const user = await User.find({
         _id: user_id,
         role: "ADMIN"
-    })
+    }, '_id')
     if (user.length != 0) {
         const body = req.body;
         const verify = CategoryTypeSchema.safeParse(body);
@@ -155,7 +156,7 @@ app.post("/11_module_b/api/categories", async (req, res) => {
 
 // List Categories
 app.get("/11_module_b/api/categories", async (req, res) => {
-    const categories = await CategoryType.find({});
+    const categories = await CategoryType.find({}, '_id');
     res.json({
         success: true,
         data: categories
@@ -210,7 +211,7 @@ app.post("/11_module_b/api/requests", async(req, res) => {
     const user_id = req.user_id;
     const reqs = await ServiceRequest.find({
         user_id,
-    })
+    },'_id')
     if (reqs.length != 0) {
         return res.json({
             success: true,
@@ -228,7 +229,7 @@ app.get("/11_module_b/api/requests/:id", async (req, res) => {
     const requestId = req.params.id;
     const reqStatus = await RequestStatus.find({
         request_id: requestId
-    });
+    }, '_id');
     if (reqStatus.length != 0) {
         return res.json({
             success: true,
@@ -331,7 +332,7 @@ app.get("/11_module_b/api/requests/:id/comments", async (req, res) => {
     const requestId = req.params.id;
     const comments = await Comments.find({
         request_id: requestId
-    })
+    }, '_id')
     if (comments.length != 0) {
         res.json({
             success: true,
